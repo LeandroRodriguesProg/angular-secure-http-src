@@ -19,13 +19,12 @@
           }
 
           $scope.$watch('objectURL', function (objectURL) {
-		if(elem.context.tagName==="A")
-		  {
-			  elem.attr('href', objectURL);
-			  elem.attr('target', "_blank");															
-		  }else{
-			  elem.attr('src', objectURL);						
-		  }
+		if (elem[0].tagName === "A") {
+	      		elem.attr('href', objectURL);
+		      	elem.attr('target', "_blank");
+	    	} else {
+		     	elem.attr('src', objectURL);
+		}
           });
 
           $scope.$on('$destroy', function () {
