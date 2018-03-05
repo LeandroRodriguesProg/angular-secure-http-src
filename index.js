@@ -3,7 +3,7 @@
 (function () {
   'use strict';
 
-  angular.module('angular.img', [])
+  angular.module('angular.secureResources', [])
     .directive('httpSrc', ['$http', function ($http) {
       return {
         // do not share scope with sibling img tags and parent
@@ -19,7 +19,13 @@
           }
 
           $scope.$watch('objectURL', function (objectURL) {
-            elem.attr('src', objectURL);
+           	if(elem.context.tagName==="A")
+					  {
+						  elem.attr('href', objectURL);
+						  elem.attr('target', "_blank");															
+					  }else{
+						  elem.attr('src', objectURL);						
+					  }
           });
 
           $scope.$on('$destroy', function () {
