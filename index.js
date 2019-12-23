@@ -8,7 +8,7 @@
       return {
         // do not share scope with sibling img tags and parent
         // (prevent show same images on img tag)
-        template:'<a ng-if="browserIE" href="{{objectURL}}" target="_blank"> <b>Clique aqui para fazer download</b> </a> <a ng-if="!browserIE" ng-click="openForIE()"> <b>Clique aqui para fazer download</b> </a>',
+        template:'<a ng-if="!browserIE" href="{{objectURL}}" target="_blank"> <b>Clique aqui para fazer download</b> </a> <a ng-if="browserIE" ng-click="openForIE()"> <b>Clique aqui para fazer download</b> </a>',
         scope: {
           httpSrc: '@'
         },
