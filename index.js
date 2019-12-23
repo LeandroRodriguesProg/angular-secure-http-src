@@ -8,9 +8,7 @@
       return {
         // do not share scope with sibling img tags and parent
         // (prevent show same images on img tag)
-        template:`<a ng-if="browser=='other'" href="{{objectURL}}" target="_blank"> <b>Clique aqui para fazer download</b> </a>
-        <a ng-if="browser=='ie'" ng-click="openForIE()"> <b>Clique aqui para fazer download</b> </a>
-        `,
+        template:'<a ng-if="browserIE" href="{{objectURL}}" target="_blank"> <b>Clique aqui para fazer download</b> </a> <a ng-if="!browserIE" ng-click="openForIE()"> <b>Clique aqui para fazer download</b> </a>',
         scope: {
           httpSrc: '@'
         },
@@ -52,10 +50,10 @@
                     [response.data], { type: response.headers('Content-Type') }
                   );
                   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                    $scope.browser="ie";
+                    $scope.browserIE=true;
                     $scope.objectURL = blob;
                 } else {
-                    $scope.browser="other";
+                  $scope.browserIE=false;
                     $scope.objectURL = URL.createObjectURL(blob);
                 }
 
@@ -68,6 +66,10 @@
             }
           });
         }
+      };
+    }]);
+})();
+ }
       };
     }]);
 })();
