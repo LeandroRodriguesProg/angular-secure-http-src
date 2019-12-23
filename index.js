@@ -8,6 +8,9 @@
       return {
         // do not share scope with sibling img tags and parent
         // (prevent show same images on img tag)
+        template:`<a ng-if="browser=='other'" href="{{objectURL}}" target="_blank"> <b>Clique aqui para fazer download</b> </a>
+        <a ng-if="browser=='ie'" ng-click="openForIE()"> <b>Clique aqui para fazer download</b> </a>
+        `,
         scope: {
           httpSrc: '@'
         },
@@ -19,12 +22,12 @@
           }
 
           $scope.$watch('objectURL', function (objectURL) {
-		if (elem[0].tagName === "A") {
-	      		elem.attr('href', objectURL);
-		      	elem.attr('target', "_blank");
-	    	} else {
-		     	elem.attr('src', objectURL);
-		}
+              if (elem[0].tagName === "A") {
+                      elem.attr('href', objectURL);
+                      elem.attr('target', "_blank");
+                  } else {
+                    elem.attr('src', objectURL);
+              }
           });
 
           $scope.$on('$destroy', function () {
@@ -48,7 +51,19 @@
                   var blob = new Blob(
                     [response.data], { type: response.headers('Content-Type') }
                   );
-                  $scope.objectURL = URL.createObjectURL(blob);
+                  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    $scope.browser="ie";
+                    $scope.objectURL = blob;
+                } else {
+                    $scope.browser="other";
+                    $scope.objectURL = URL.createObjectURL(blob);
+                }
+
+                $scope.openForIE = function() {
+                  window.navigator.msSaveOrOpenBlob($scope.objectURL, "fichaAt.pdf");
+                }
+                
+                  
                 });
             }
           });
