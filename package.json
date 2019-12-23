@@ -1,6 +1,6 @@
 {
   "name": "angular-secure-http-src",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Use $http service to fetch resources as objectURL",
   "main": "index.js",
   "scripts": {
